@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="js/three.js"></script>
+    <script src="js/CircleS.js"></script>
+    <script src="js/geometryS.js"></script>
+    <script src="js/Vector3S.js"></script>
+    <script src="js/CubeTextureS.js.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            background-color: #EEEEEE;
+        }
+
+    </style>
+    <script>
+        let renderer;
+        function initThree() {
+            width = document.getElementById('canvas-frame').clientWidth;
+            height = document.getElementById('canvas-frame').clientHeight;
+            renderer = new THREE.WebGLRenderer({
+                antialias : true
+            });
+            renderer.setSize(width, height);
+            document.getElementById('canvas-frame').appendChild(renderer.domElement);
+            renderer.setClearColor(0xFFFFFF, 1.0);
+        }
+
+        let camera;
+        function initCamera() {
+            camera = new THREE.PerspectiveCamera(45, 1600/1300, 1, 10000);
+            camera.position.x = 500;
+            camera.position.y = 1300;
+            camera.position.z = 1500;
+            camera.up.x = 0;
+            camera.up.y = 1;
+            camera.up.z = 0;
+            camera.lookAt({
+                x : 0,
+                y : 0,
+                z : 0
+            });
+        }
+
+
+
+        let scene;
+        function initScene() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color( 0xcccccc );
+        };
+        let light;
+        let light1;
+        let light2;
+        function initLight() {
+
+            //环境光
+            light = new THREE.AmbientLight(0xFFFFFF);
+            light.position.set(100, 100, 200);
+            scene.add(light);
+
+            // 方向光
+            //light1 = new THREE.DirectionalLight(0xFFFFFF);
+            //light1.position.set(0, 200,500);
+            //scene.add(light1);
+
+            //点光源
+            light2 = new THREE.PointLight(0xCC9999,1);
+            light2.position.set(0, 300,0);
+            scene.add(light2);
+        }
+
+
+        function initObject() {
+
+            //地板
+            let geometry00 = new THREE.CubeGeometry( 1600, 10, 1300);
+            let loader = new THREE.CubeTextureLoader();
+//            loader.setPath( 'textures/floors/' );
+
+            let textureCube = loader.load( [
+                'menu.jpg', 'menu.jpg',
+                'menu.jpg', 'menu.jpg',
+                'menu.jpg', 'menu.jpg'
+            ] );
+
+            let material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } );
+            //let material00 = new THREE.MeshLambertMaterial( { color:0xCCCCCC} );
+            let mesh00 = new THREE.Mesh( geometry00,material);
+            mesh00.position.set(0,0,0);
+            scene.add(mesh00);
+
+            //桌子
+            let geometry0 = new THREE.CubeGeometry( 80, 100, 300);
+            let material0 = new THREE.MeshLambertMaterial( { color:0x996633} );
+            let mesh0 = new THREE.Mesh( geometry0,material0);
+            mesh0.position.set(-235,50,-205);
+            scene.add(mesh0);
+
+            let geometry1 = new THREE.CubeGeometry( 80, 100, 300);
+            let material1 = new THREE.MeshLambertMaterial( { color:0x996633} );
+            let mesh1 = new THREE.Mesh( geometry1,material1);
+            mesh1.position.set(45,50,-205);
+            scene.add(mesh1);
+
+            let geometry2 = new THREE.CubeGeometry( 80, 100, 300);
+            let material2 = new THREE.MeshLambertMaterial( { color:0x996633} );
+            let mesh2 = new THREE.Mesh( geometry2,material2);
+            mesh2.position.set(325,50,-205);
+            scene.add(mesh2);
+
+            //墙体
+            let geometry3 = new THREE.CubeGeometry( 1220, 300, 50);
+            let material3 = new THREE.MeshLambertMaterial( { color:0x778899} );
+            let mesh3 = new THREE.Mesh( geometry3,material3);
+            mesh3.position.set(0,150,-400);
+            scene.add(mesh3);
+
+            let mesh4 = new THREE.Mesh( geometry3,material3);
+            mesh4.position.set(0,150,400);
+            scene.add(mesh4);
+
+            let geometry5 = new THREE.CubeGeometry( 20, 300, 800);
+            let material5 = new THREE.MeshLambertMaterial( { color:0x778899} );
+            let mesh5 = new THREE.Mesh( geometry5,material5);
+            mesh5.position.set(-600,150,0);
+            scene.add(mesh5);
+
+            let mesh6 = new THREE.Mesh( geometry5,material5);
+            mesh6.position.set(600,150,0);
+            scene.add(mesh6);
+
+            //门
+            let geometry7 = new THREE.BoxGeometry(100, 260, 51 );
+            let material7 = new THREE.MeshLambertMaterial({color:0x330000});
+            let cube7 = new THREE.Mesh( geometry7, material7 );
+            cube7.position.set(-500,130,400);
+            scene.add(cube7);
+
+
+
+            //柜子
+            let geometry8 = new THREE.BoxGeometry(120,260,80);
+            let material8 = new THREE.MeshLambertMaterial({color:0x660000});
+            let cube8 = new THREE.Mesh( geometry8, material8 );
+            cube8.position.set(-500,130,-300);
+            scene.add(cube8);
+
+            //表
+            let geometry9 = new THREE.CircleGeometry(50,32,twoPi,twoPi);
+            let material9 = new THREE.MeshBasicMaterial( { color: 0xFFCC66 } );
+            let circle9 = new THREE.Mesh( geometry9, material9 );
+            circle9.position.set(-589,220,0);
+            circle9.rotation.y =1.57;
+            circle9.rotation.x =-1.55;
+            scene.add( circle9 );
+
+
+            //墙围
+            let geometry10 = new THREE.PlaneGeometry( 1190, 50, 32 );
+            let material10 = new THREE.MeshBasicMaterial( {color: 0xCCCCCC, side: THREE.DoubleSide} );
+            let plane10 = new THREE.Mesh( geometry10, material10 );
+            plane10.position.set(5,25,-374);
+            scene.add( plane10 );
+
+            let plane11 = new THREE.Mesh( geometry10,material10);
+            plane11.position.set(5,25,374);
+            scene.add(plane11);
+
+            let geometry12 = new THREE.PlaneGeometry( 750, 50, 32 );
+            let material12 = new THREE.MeshBasicMaterial( {color: 0xCCCCCC, side: THREE.DoubleSide} );
+            let plane12 = new THREE.Mesh( geometry12, material12 );
+            plane12.position.set(-589,25,0);
+            plane12.rotation.y =1.57;
+            scene.add( plane12 );
+
+            let plane13 = new THREE.Mesh( geometry12,material12);
+            plane13.position.set(589,25,0);
+            plane13.rotation.y =1.57;
+            scene.add(plane13);
+
+            //窗户
+            let geometry14 = new THREE.BoxGeometry(800, 180, 51 );
+            let material14 = new THREE.MeshLambertMaterial({color:0xCCCCCC});
+            let cube14 = new THREE.Mesh( geometry14, material14 );
+            cube14.position.set(50,160,400);
+            scene.add(cube14);
+
+            //门前脚垫
+            let geometry15 = new THREE.PlaneGeometry( 100, 80, 32 );
+            let material15 = new THREE.MeshBasicMaterial( {color: 0x333333} );
+            let plane15 = new THREE.Mesh( geometry15, material15 );
+            plane15.position.set(-500,8,475);
+            plane15.rotation.x =-1.55;
+            scene.add( plane15 );
+
+            //衣架
+            let geometry16 = new THREE.CylinderGeometry( 6, 6, 280, 32 );
+            let material16 = new THREE.MeshBasicMaterial( {color: 0x330033} );
+            let cylinder16 = new THREE.Mesh( geometry16, material16 );
+            cylinder16.position.set(-380,140,-300);
+            scene.add( cylinder16 );
+
+            let geometry17 = new THREE.CylinderGeometry( 4, 4, 50, 32 );
+            let material17 = new THREE.MeshBasicMaterial( {color: 0x330033} );
+            let cylinder17 = new THREE.Mesh( geometry17, material17 );
+            cylinder17.position.set(-370,200,-300);
+            cylinder17.rotation.x =0;
+            cylinder17.rotation.z =-0.5;
+            scene.add( cylinder17 );
+
+            let geometry18 = new THREE.CylinderGeometry( 4, 4, 40, 32 );
+            let material18 = new THREE.MeshBasicMaterial( {color: 0x330033} );
+            let cylinder18 = new THREE.Mesh( geometry18, material18 );
+            cylinder18.position.set(-390,230,-300);
+            cylinder18.rotation.x =0;
+            cylinder18.rotation.z =0.5;
+            scene.add( cylinder18 );
+
+            //门把手
+            let geometry19 = new THREE.CircleGeometry(5,32,twoPi,twoPi);
+            let material19 = new THREE.MeshBasicMaterial( { color: 0xFFFFCC} );
+            let circle19 = new THREE.Mesh( geometry19, material19 );
+            circle19.position.set(-465,130,426);
+            scene.add( circle19 );
+
+            //工位
+            //(1)
+            let geometry20 = new THREE.CubeGeometry( 100, 200, 5);
+            let material20 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh20 = new THREE.Mesh( geometry20,material20);
+            mesh20.position.set(-230,100,-45);
+            scene.add(mesh20);
+
+            let geometry21 = new THREE.CubeGeometry( 5, 200, 320);
+            let material21 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh21 = new THREE.Mesh( geometry21,material21);
+            mesh21.position.set(-280,100,-205);
+            scene.add(mesh21);
+
+            //(2)
+            let geometry22 = new THREE.CubeGeometry( 100, 200, 5);
+            let material22 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh22 = new THREE.Mesh( geometry22,material22);
+            mesh22.position.set(50,100,-45);
+            scene.add(mesh22);
+
+            let geometry23 = new THREE.CubeGeometry( 5, 200, 320);
+            let material23 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh23 = new THREE.Mesh( geometry23,material23);
+            mesh23.position.set(0,100,-205);
+            scene.add(mesh23);
+
+
+            //(3)
+            let geometry24 = new THREE.CubeGeometry( 100, 200, 5);
+            let material24 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh24 = new THREE.Mesh( geometry24,material24);
+            mesh24.position.set(330,100,-45);
+            scene.add(mesh24);
+
+            let geometry25 = new THREE.CubeGeometry( 5, 200, 320);
+            let material25 = new THREE.MeshLambertMaterial( { color:0x663333} );
+            let mesh25 = new THREE.Mesh( geometry25,material25);
+            mesh25.position.set(280,100,-205);
+            scene.add(mesh25);
+
+            //椅子
+
+            let geometry26 = new THREE.CylinderGeometry( 30, 30, 80, 32 );
+            let material26 = new THREE.MeshBasicMaterial( {color: 0x663333} );
+            let cylinder26 = new THREE.Mesh( geometry26, material26 );
+            cylinder26.position.set(-130,40,-180);
+            scene.add( cylinder26 );
+
+            let geometry27 = new THREE.CylinderGeometry( 30, 30, 80, 32 );
+            let material27 = new THREE.MeshBasicMaterial( {color: 0x663333} );
+            let cylinder27 = new THREE.Mesh( geometry27, material27 );
+            cylinder27.position.set(150,40,-180);
+            scene.add( cylinder27 );
+
+            let geometry28 = new THREE.CylinderGeometry( 30, 30, 80, 32 );
+            let material28 = new THREE.MeshBasicMaterial( {color: 0x663333} );
+            let cylinder28 = new THREE.Mesh( geometry28, material28 );
+            cylinder28.position.set(430,40,-180);
+            scene.add( cylinder28 );
+
+
+
+
+        }
+
+        function threeStart() {
+            initThree();
+            initCamera();
+            initScene();
+            initLight();
+            initObject();
+            renderer.clear();
+            renderer.render(scene, camera);
+        }
+
+
+    </script>
+</head>
+
+<body onload="threeStart();">
+<div id="canvas-frame"></div>
+</body>
+</html>

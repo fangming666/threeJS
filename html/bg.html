@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .banner {
+            height: 360px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-figures {
+            position: absolute;
+            width: 3174px;
+            height: 2624px;
+            left: 50%;
+            margin-left: -1587px;
+            top: 50%;
+            margin-top: -940px;
+            z-index: 0;
+        }
+
+        .banner .shape {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: .75;
+        }
+
+        .banner .shape1 {
+            width: 800px;
+            height: 800px;
+            left: 0;
+            top: 0;
+            background-image: -webkit-gradient(linear, left top, right bottom, from(#183de7), color-stop(80%, #48cffe));
+            background-image: linear-gradient(to bottom right, #183de7, #48cffe 80%);
+            -webkit-clip-path: inset(0 0 0 0 round 100px);
+            clip-path: inset(0 0 0 0 round 100px);
+            z-index: 1;
+        }
+
+        .banner .shape2 {
+            width: 1200px;
+            height: 1200px;
+            left: 215px;
+            top: 190px;
+            -webkit-clip-path: inset(0 0 0 0 round 100px);
+            clip-path: inset(0 0 0 0 round 100px);
+            background-image: -webkit-gradient(linear, left top, right bottom, from(#183de7), color-stop(80%, #48cffe));
+            background-image: linear-gradient(to bottom right, #183de7, #48cffe 80%);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            z-index: 2;
+        }
+
+        .banner .shape3 {
+            width: 960px;
+            height: 960px;
+            left: 1060px;
+            top: 450px;
+            border-radius: 50%/100% 0;
+            background: #00ffff;
+            z-index: 3;
+        }
+
+        .banner .shape4,
+        .banner .shape5 {
+            width: 880px;
+            height: 880px;
+            right: 478px;
+            top: 336px;
+            -webkit-clip-path: circle();
+            clip-path: circle();
+            background-image: -webkit-gradient(linear, left top, right top, from(#0db54c), color-stop(40%, #00697b));
+            background-image: linear-gradient(to right, #0db54c, #00697b 40%);
+            z-index: 4;
+        }
+
+        .banner .shape5 {
+            width: 1600px;
+            height: 1600px;
+            right: 820px;
+            top: 960px;
+            z-index: 5;
+        }
+
+        .banner .shape6 {
+            width: 1374px;
+            height: 1184px;
+            right: 0px;
+            bottom: 445px;
+            -webkit-clip-path: polygon(0 0, 50% 100%, 100% 0);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            background-image: -webkit-gradient(linear, left top, right top, from(#f76b71), color-stop(60%, #a41058));
+            background-image: linear-gradient(to right, #f76b71, #a41058 60%);
+            z-index: 6;
+        }
+
+        .ani1 {
+            -webkit-animation: spin2 202s linear infinite;
+            animation: spin2 202s linear infinite;
+        }
+
+        .ani2 {
+            -webkit-animation: spin1 481s linear infinite;
+            animation: spin1 481s linear infinite;
+        }
+
+        .ani3 {
+            -webkit-animation: spin1 502s linear infinite;
+            animation: spin1 502s linear infinite;
+        }
+
+        .ani4 {
+            -webkit-animation: spin1 824s linear infinite;
+            animation: spin1 824s linear infinite;
+        }
+
+        @-webkit-keyframes spin1 {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+            }
+        }
+
+        @keyframes spin1 {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+            }
+        }
+        @-webkit-keyframes spin2 {
+            100% {
+                -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+            }
+        }
+        @keyframes spin2 {
+            100% {
+                -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="banner">
+    <div class="banner-figures">
+        <div class="shape shape1 ani1"></div>
+        <div class="shape shape2 ani2"></div>
+        <div class="shape shape3 ani3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5 ani3"></div>
+        <div class="shape shape6 ani4"></div>
+    </div>
+</div>
+</body>
+
+</html>

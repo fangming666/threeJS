@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>base</title>
+</head>
+<body>
+<canvas width="100px" id="canvas" height="100px"></canvas>
+</body>
+<script>
+    window.onload = function () {
+
+        //顶点着色器程序
+        let VSHADER_SOURCE =
+            "attribute vec4 a_Position;" +
+            "void main() {" +
+            //设置坐标
+            "gl_Position = a_Position; " +
+            "} ";
+
+        //片段着色器
+        let FSHADER_SOURCE =
+            "void main() {" +
+            //设置颜色
+            "gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);" +
+            "}";
+        //获取canvas元素
+        let canvas = document.getElementById('canvas');
+        //获取绘制二维上下文
+        let gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.log("Failed");
+            return;
+        }
+        //编译着色器
+        let vertShader = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(vertShader, VSHADER_SOURCE);
+        gl.compileShader(vertShader);
+
+        let fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(fragShader, FSHADER_SOURCE);
+        gl.compileShader(fragShader);
+        //合并程序
+        let shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertShader);
+        gl.attachShader(shaderProgram, fragShader);
+        gl.linkProgram(shaderProgram);
+        gl.useProgram(shaderProgram);
+
+        //获取坐标点
+        let a_Position = gl.getAttribLocation(shaderProgram, 'a_Position');
+
+        if (a_Position < 0) {
+            console.log('Failed to get the storage location of a_Position');
+            return;
+        }
+
+        let n = initBuffers(gl,shaderProgram);
+
+        if(n<0){
+            console.log('Failed to set the positions');
+            return;
+        }
+        // 清除指定<画布>的颜色
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        // 清空 <canvas>
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.drawArrays(gl.TRIANGLES, 0, n);
+        function initBuffers(gl,shaderProgram) {
+            let vertices = new Float32Array([
+                0.0, 0.5, -0.5, -0.5, 0.5, -0.5
+            ]);
+            let n = 3;//点的个数
+            //创建缓冲区对象
+            let vertexBuffer = gl.createBuffer();
+            if(!vertexBuffer){
+                console.log("Failed to create the butter object");
+                return -1;
+            }
+            //将缓冲区对象绑定到目标
+            gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer);
+            //向缓冲区写入数据
+            gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+            //获取坐标点
+            let a_Position = gl.getAttribLocation(shaderProgram, 'a_Position');
+            //将缓冲区对象分配给a_Position变量
+            gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+            //连接a_Position变量与分配给它的缓冲区对象
+            gl.enableVertexAttribArray(a_Position);
+            return n;
+
+        }
+    }
+</script>
+</html>

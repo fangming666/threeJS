@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       button{
+           pointer-events: none;
+       }
+       ::selection{
+           color: #fff;
+           background-color: #6bc30d;
+       }
+    </style>
+</head>
+<body>
+<button>点击</button>
+<p>12333333333333333333333333333333</p>
+</body>
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script>
+   $(()=>{
+       $("button").click(()=>{
+           alert("1");
+       })
+   })
+
+</script>
+</html>
